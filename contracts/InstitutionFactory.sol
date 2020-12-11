@@ -6,7 +6,7 @@ import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 
 contract InstitutionFactory is Ownable {
     
-    event InstitutionCreated(uint indexed id, string indexed name, address indexed addr);
+    event InstitutionCreated(uint indexed id, string name, address indexed addr);
     
     struct Institution {
         string name;
@@ -45,5 +45,9 @@ contract InstitutionFactory is Ownable {
         institution.isValid = false;
         ownerToInstitution[institutionToOwner[_id]] = 0;
         institutionToOwner[_id] = address(0);
+    }
+
+    function getInstitutionsSize() external view returns (uint) {
+        return institutions.length;
     }
 }

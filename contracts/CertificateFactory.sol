@@ -6,7 +6,7 @@ import "./InstitutionFactory.sol";
 
 contract CertificateFactory is InstitutionFactory {
     
-    event CertificateCreated(uint indexed id, bytes32 indexed digest, address indexed addr);
+    event CertificateCreated(uint indexed id, bytes32 digest, address indexed addr);
 
     // uint8 defaultHashFunction = 12; // sha-2
     // uint8 defaultDigestSize = 20; // 256-bits
