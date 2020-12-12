@@ -12,21 +12,51 @@ contract("CryptoCerts", accounts => {
 
     it("should be able to create a new institution", () => {
         CryptoCerts.deployed()
-            .then(instance => instance.createInstitution.call(institutionName, institution, { from: admin }))
-            .then(results => {
-                assert.equal(results.receipt.status, true);
-                assert.equal(results.logs[0].args.name, institutionName);
-                assert.equal(results.logs[0].args.addr, institution);
+            .then(instance => {
+                instance.createInstitution.call(institutionName, institution, { from: admin })
+                    .then(results => {
+                        assert.equal(results.receipt.status, true);
+                        assert.equal(results.logs[0].args.name, institutionName);
+                        assert.equal(results.logs[0].args.addr, institution);
+
+                        instance.getInstitutionsSize.call({ from: admin })
+                            .then(size => {
+                                assert.equal(size, 1);
+                                let id = size;
+                                instance.ownerToInstitution.call(institution, { from: admin })
+                                    .then(institutionId => assert.equal(institutionId, id));
+                                instance.institutionToOwner.call(id, { from: admin })
+                                    .then(address => assert.equal(address, institution))
+                            });
+                    });
             })
     });
 
     it("should be able to create a new certificate", () => {
         CryptoCerts.deployed()
-            .then(instance => instance.createCertificate.call(digest, hashFunction, size, student, { from: institution }))
-            .then(results => {
-                assert.equal(results.receipt.status, true);
-                assert.equal(results.logs[0].args.digest, digest);
-                assert.equal(results.logs[0].args.addr, student);
+            .then(instance => {
+                instance.createCertificate.call(digest, hashFunction, size, student, { from: institution })
+                    .then(results => {
+                        assert.equal(results.receipt.status, true);
+                        assert.equal(results.logs[0].args.digest, digest);
+                        assert.equal(results.logs[0].args.addr, student);
+
+                        instance.institutionCertificatesCount.call(institution, { from: institution })
+                            .then(count => {
+                                assert.equal(count, 1);
+                                let id = count;
+                                instance.certificateToInstitution.call(id, { from: institution })
+                                    .then(address => assert.equal(address, institution));
+                            });
+
+                        instance.studentCertificatesCount.call(student, { from: student })
+                            .then(count => {
+                                assert.equal(count, 1);
+                                let id = count;
+                                instance.certificateToStudent.call(id, { from: student })
+                                    .then(address => assert.equal(address, student));
+                            });
+                    });
             })
     });
 });
