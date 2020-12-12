@@ -12,6 +12,7 @@ contract CertificateFactory is InstitutionFactory {
     // uint8 defaultDigestSize = 20; // 256-bits
 
     struct Certificate {
+      string title;
       bytes32 digest;
       uint8 hashFunction;
       uint8 size;
@@ -23,8 +24,8 @@ contract CertificateFactory is InstitutionFactory {
 
     Certificate[] public certificates;
     
-    function createCertificate(bytes32 _digest, uint8 _hashFunction, uint8 _size, address _address) public {
-        Certificate memory cert = Certificate(_digest, _hashFunction, _size, block.timestamp);
+    function createCertificate(string memory _title, bytes32 _digest, uint8 _hashFunction, uint8 _size, address _address) public {
+        Certificate memory cert = Certificate(_title, _digest, _hashFunction, _size, block.timestamp);
         certificates.push(cert);
 
         uint id = certificates.length - 1;
