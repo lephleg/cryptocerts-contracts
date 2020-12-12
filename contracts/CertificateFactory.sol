@@ -2,9 +2,12 @@
 
 pragma solidity ^0.7.0;
 
+import "../node_modules/@openzeppelin/contracts/math/SafeMath.sol";
 import "./InstitutionFactory.sol";
 
 contract CertificateFactory is InstitutionFactory {
+    using SafeMath for uint256;
+
     event CertificateCreated(
         uint256 indexed id,
         bytes32 digest,
@@ -22,8 +25,11 @@ contract CertificateFactory is InstitutionFactory {
         uint256 createdAt;
     }
 
-    mapping(address => uint256[]) public studentToCertificates;
-    mapping(address => uint256[]) public institutionToCertificates;
+    mapping(uint256 => address) public certificateToInstitution;
+    mapping(address => uint256) public institutionCertificatesCount;
+
+    mapping(uint256 => address) public certificateToStudent;
+    mapping(address => uint256) public studentCertificatesCount;
 
     Certificate[] public certificates;
 
@@ -42,10 +48,13 @@ contract CertificateFactory is InstitutionFactory {
             block.timestamp
         );
         certificates.push(cert);
-
         uint256 id = certificates.length - 1;
-        studentToCertificates[_address].push(id);
-        institutionToCertificates[_msgSender()].push(id);
+        
+        certificateToInstitution[id] = msg.sender;
+        institutionCertificatesCount[msg.sender] = institutionCertificatesCount[msg.sender].add(1);
+
+        certificateToStudent[id] = _address;
+        institutionCertificatesCount[_address] = institutionCertificatesCount[_address].add(1);
 
         CertificateCreated(id, _digest, _address);
     }
