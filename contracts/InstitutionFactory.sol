@@ -32,10 +32,7 @@ contract InstitutionFactory is Ownable {
         _;
     }
 
-    function createInstitution(string memory _name, address _address)
-        public
-        onlyOwner
-    {
+    function createInstitution(string memory _name, address _address) public onlyOwner {
         institutions.push(Institution(_name, true));
 
         uint256 id = institutions.length - 1;
@@ -45,10 +42,7 @@ contract InstitutionFactory is Ownable {
         InstitutionCreated(id, _name, _address);
     }
 
-    function editInstitution(uint256 _id, string memory _name)
-        public
-        onlyOwner
-    {
+    function editInstitution(uint256 _id, string memory _name) public onlyOwner {
         institutions[_id].name = _name;
     }
 
