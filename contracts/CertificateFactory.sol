@@ -49,7 +49,7 @@ contract CertificateFactory is InstitutionFactory {
         );
         certificates.push(cert);
         uint256 id = certificates.length - 1;
-        
+
         certificateToInstitution[id] = msg.sender;
         institutionCertificatesCount[msg.sender] = institutionCertificatesCount[msg.sender].add(1);
 
@@ -57,5 +57,33 @@ contract CertificateFactory is InstitutionFactory {
         institutionCertificatesCount[_address] = institutionCertificatesCount[_address].add(1);
 
         CertificateCreated(id, _digest, _address);
+    }
+
+    function getCertificatesByInstitution(address _address) external view returns (uint256[] memory) {
+        uint256[] memory result = new uint256[](institutionCertificatesCount[_address]);
+
+        uint256 counter = 0;
+        for (uint256 i = 0; i < certificates.length; i++) {
+            if (certificateToInstitution[i] == _address) {
+                result[counter] = i;
+                counter++;
+            }
+        }
+
+        return result;
+    }
+
+    function getCertificatesByStudent(address _address) external view returns (uint256[] memory) {
+        uint256[] memory result = new uint256[](studentCertificatesCount[_address]);
+
+        uint256 counter = 0;
+        for (uint256 i = 0; i < certificates.length; i++) {
+            if (certificateToStudent[i] == _address) {
+                result[counter] = i;
+                counter++;
+            }
+        }
+
+        return result;
     }
 }
