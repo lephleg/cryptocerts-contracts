@@ -48,7 +48,7 @@ contract CertificateFactory is InstitutionFactory {
             block.timestamp
         );
         certificates.push(cert);
-        uint256 id = certificates.length - 1;
+        uint256 id = certificates.length;
 
         certificateToInstitution[id] = msg.sender;
         institutionCertificatesCount[msg.sender] = institutionCertificatesCount[msg.sender].add(1);

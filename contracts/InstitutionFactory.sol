@@ -35,7 +35,7 @@ contract InstitutionFactory is Ownable {
     function createInstitution(string memory _name, address _address) public onlyOwner {
         institutions.push(Institution(_name, true));
 
-        uint256 id = institutions.length - 1;
+        uint256 id = institutions.length;
         ownerToInstitution[_address] = id;
         institutionToOwner[id] = _address;
 
