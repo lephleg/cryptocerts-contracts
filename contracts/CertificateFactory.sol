@@ -54,7 +54,7 @@ contract CertificateFactory is InstitutionFactory {
         institutionCertificatesCount[msg.sender] = institutionCertificatesCount[msg.sender].add(1);
 
         certificateToStudent[id] = _address;
-        institutionCertificatesCount[_address] = institutionCertificatesCount[_address].add(1);
+        studentCertificatesCount[_address] = studentCertificatesCount[_address].add(1);
 
         CertificateCreated(id, _digest, _address);
     }
