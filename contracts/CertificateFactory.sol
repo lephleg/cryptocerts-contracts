@@ -10,7 +10,7 @@ contract CertificateFactory is InstitutionFactory {
 
     event CertificateCreated(
         uint256 indexed id,
-        bytes32 digest,
+        bytes32 indexed digest,
         address indexed addr
     );
 
