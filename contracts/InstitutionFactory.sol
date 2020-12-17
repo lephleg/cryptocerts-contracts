@@ -13,6 +13,7 @@ contract InstitutionFactory is Ownable {
 
     struct Institution {
         string name;
+        string location;
         bool isValid;
     }
 
@@ -32,8 +33,8 @@ contract InstitutionFactory is Ownable {
         _;
     }
 
-    function createInstitution(string memory _name, address _address) public onlyOwner {
-        institutions.push(Institution(_name, true));
+    function createInstitution(string memory _name, string memory _location, address _address) public onlyOwner {
+        institutions.push(Institution(_name, _location, true));
 
         uint256 id = institutions.length;
         ownerToInstitution[_address] = id;
@@ -42,8 +43,9 @@ contract InstitutionFactory is Ownable {
         InstitutionCreated(id, _name, _address);
     }
 
-    function editInstitution(uint256 _id, string memory _name) public onlyOwner {
+    function editInstitution(uint256 _id, string memory _name, string memory _location) public onlyOwner {
         institutions[_id].name = _name;
+        institutions[_id].location = _location;
     }
 
     function deleteInstitution(uint256 _id) public onlyOwner {
