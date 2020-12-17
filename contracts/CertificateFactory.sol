@@ -14,9 +14,6 @@ contract CertificateFactory is InstitutionFactory {
         address indexed addr
     );
 
-    // uint8 defaultHashFunction = 12; // sha-2
-    // uint8 defaultDigestSize = 20; // 256-bits
-
     struct Certificate {
         string title;
         bytes32 digest;
@@ -57,6 +54,10 @@ contract CertificateFactory is InstitutionFactory {
         studentCertificatesCount[_address] = studentCertificatesCount[_address].add(1);
 
         CertificateCreated(id, _digest, _address);
+    }
+
+    function getCertificatesCount() external view returns (uint256) {
+        return certificates.length;
     }
 
     function getCertificatesByInstitution(address _address) external view returns (uint256[] memory) {
