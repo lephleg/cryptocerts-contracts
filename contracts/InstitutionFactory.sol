@@ -55,7 +55,7 @@ contract InstitutionFactory is Ownable {
         institutionToOwner[_id] = address(0);
     }
 
-    function getInstitutionsSize() external view returns (uint256) {
+    function getInstitutionsCount() external view returns (uint256) {
         return institutions.length;
     }
 }
