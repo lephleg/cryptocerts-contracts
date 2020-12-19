@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  truffle:
+    container_name: truffle
+    image: truffle-image
+    build: .
+    volumes:
+      - .:/dapp
+    entrypoint: sh
+    command: '-c "sleep 1d"'
+  ganache-cli:
+    container_name: ganache-cli
+    image: trufflesuite/ganache-cli:latest
+    volumes:
+      - ganache_db:/data
+    ports:
+      - 8545:8545
+    command: "--db /data -a 10 -d --mnemonic '${MNEMONIC}'"
+volumes:
+  ganache_db:
