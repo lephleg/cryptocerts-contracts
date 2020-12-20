@@ -100,11 +100,11 @@ In order to reset the blockchain records in Genache CLI and start from scratch u
     ```
     $ docker rm -f ganache-cli
     ```
-* Remove the `ganache_db` volume:
+* Remove the `<parent_dir>_ganache_db` volume:
     ```
-    $ docker volume rm ganache_db
+    $ docker volume rm <parent_dir>_ganache_db
     ```
 * While being in project root, recreate the container:
     ```
-    $ docker container up -d
+    $ docker-compose up -d
     ```
