@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
-import "../node_modules/@openzeppelin/contracts/math/SafeMath.sol";
 import "./InstitutionFactory.sol";
 
 contract CertificateFactory is InstitutionFactory {
-    using SafeMath for uint256;
 
     event CertificateCreated(
         uint256 indexed id,
@@ -48,10 +46,10 @@ contract CertificateFactory is InstitutionFactory {
         uint256 id = certificates.length;
 
         certificateToInstitution[id] = msg.sender;
-        institutionCertificatesCount[msg.sender] = institutionCertificatesCount[msg.sender].add(1);
+        institutionCertificatesCount[msg.sender]++;
 
         certificateToStudent[id] = _address;
-        studentCertificatesCount[_address] = studentCertificatesCount[_address].add(1);
+        studentCertificatesCount[_address]++;
 
         CertificateCreated(id, _digest, _address);
     }
