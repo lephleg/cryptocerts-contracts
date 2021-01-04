@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.7.0;
+pragma solidity ^0.8.0;
 
-import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "./Ownable.sol";
 
 contract InstitutionFactory is Ownable {
     event InstitutionCreated(
